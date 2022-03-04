@@ -55,7 +55,7 @@ app.use(require("helmet")());
 const fullicu = require("full-icu");
 const i18n = require("./config/i18n.js");
 app.use(i18n.init);
-app.engine(".hbs", require("express-handlebars")({
+app.engine(".hbs", require("express-handlebars").engine({
   defaultLayout: "main",
   extname: ".hbs",
   partialsDir: __dirname + "/views/partials/",
