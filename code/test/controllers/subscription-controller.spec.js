@@ -991,4 +991,32 @@ describe("Subscription Controller", () => {
 
   });
 
+  describe("GET /confirmed-subscription", () => {
+
+    describe.only("Success", () => {
+
+      describe("Simple Test", () => {
+        it("should respond with success", (done) => {
+            Client.getUrl("/confirmed-subscription", {
+              paywall: "test",
+              plan: "bob",
+              prompt: "home"
+            })
+            .then(response => {
+              response.text.should.contain("test");
+              response.text.should.contain("bob");
+              response.text.should.contain("home");
+              done();
+            })
+            .catch(error => {
+              done(error);
+            });
+        });
+
+      });
+
+    });
+
+  });
+
 });

@@ -9,6 +9,7 @@ const { BruteForce } = require("shared/redis");
 
 // Utilities
 const { Stripe } = require("shared/utilities");
+const { Email } = require("shared/utilities");
 
 // Models
 const { User } = require("shared/models");
@@ -71,7 +72,7 @@ router.get("/new-subscription",
   query("locale"),
   validateCheck
 ],
-(request, response, next) => {	
+(request, response, next) => {
   const upgrade = request.values.upgrade; // If from ios/android, tell user to delete old subscription
   const browser = request.values.browser;
   const source = request.values.source;
@@ -82,7 +83,7 @@ router.get("/new-subscription",
   // if user had any previous subscriptions, trial = false
   // var trial = true;
   var trial = false; // disable trials for online subscriptions
-  
+
   var referralsPercentOff = 0;
   // create a Stripe customer if doesn't exist
   return request.user.createStripeCustomer()
@@ -146,7 +147,7 @@ router.get("/new-subscription",
   .catch( error => next(error) );
 });
 
-router.post("/new-subscription", 
+router.post("/new-subscription",
 [
   BruteForce(50),
   authenticate.checkAndSetUser,
@@ -181,7 +182,7 @@ router.post("/new-subscription",
   // ParamLocale is prioritized over BrowserLocale
   const browserLocale = request.values.browserLocale || "none";
   const paramLocale = request.values.paramLocale || "none";
-  
+
   return request.user.createStripeCustomer()
   .then(customer => {
     return request.user.getSubscriptions();
@@ -224,7 +225,7 @@ router.post("/new-subscription",
  *
  *********************************************/
 
-router.post("/subscription-event", 
+router.post("/subscription-event",
 [
   BruteForce(100),
   authenticate.checkAndSetUser,
@@ -303,6 +304,43 @@ router.post("/cancel-subscription",
   return request.user.cancelSubscriptionWithReceiptId(receiptId)
     .then( result => {
       request.flashRedirect("success", "Subscription cancelled successfully.", "/account");
+    })
+    .catch( error => next(error) );
+});
+
+/*********************************************
+ *
+ * Confirmed Subscription
+ *
+ *********************************************/
+
+router.get("/confirmed-subscription",
+[
+  BruteForce(1000),
+  query("paywall")
+    .optional()
+    .isAlphanumeric().withMessage("Paywall should be alphanumeric."),
+  query("plan")
+    .optional()
+    .isAlphanumeric().withMessage("Plan should be alphanumeric."),
+  query("prompt")
+    .optional()
+    .isAlphanumeric().withMessage("Prompt should be alphanumeric."),
+  validateCheck
+],
+(request, response, next) => {
+  const paywall = request.values.paywall;
+  const plan = request.values.plan;
+  const prompt = request.values.prompt;
+
+  var emailSubject = "[Subscription] " + paywall + " - " + plan + " - " + prompt
+  var emailBody = "New Subscription Confirmed\nPaywall: " + paywall + "\nPlan: " + plan + "\nPrompt: " + prompt
+
+  return Email.sendAdminAlert(emailSubject, emailBody)
+    .then(success => {
+      response.status(200).json({
+        message: emailBody
+      });
     })
     .catch( error => next(error) );
 });
