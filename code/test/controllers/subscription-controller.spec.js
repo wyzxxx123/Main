@@ -993,7 +993,7 @@ describe("Subscription Controller", () => {
 
   describe("GET /confirmed-subscription", () => {
 
-    describe.only("Success", () => {
+    describe("Success", () => {
 
       describe("Simple Test", () => {
         it("should respond with success", (done) => {
