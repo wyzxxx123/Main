@@ -997,7 +997,7 @@ describe("Subscription Controller", () => {
 
       describe("Simple Test", () => {
         it("should respond with success", (done) => {
-            Client.getUrl("/confirmed-subscription", {
+          Client.getUrl("/confirmed-subscription", {
               paywall: "test",
               plan: "bob",
               prompt: "home"

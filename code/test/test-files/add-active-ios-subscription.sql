@@ -14,7 +14,7 @@ INSERT INTO "public"."subscriptions"(
   "updated"
 )
 VALUES
-('871ca70401806d255f9f77106495580c',
+('cca595c86645a762672b1df9b52fda58',
   '1000000386259702',
   'ios',
   'all-monthly',
