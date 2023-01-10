@@ -3,10 +3,18 @@ const chai = require("chai");
 chai.use(require("chai-http"));
 const server = require("../app");
 const Constants = require('./constants.js');
-const { reset, changeDate, resetDate } = require("./utilities.js");
+const {
+  reset,
+  changeDate,
+  resetDate
+} = require("./utilities.js");
 
-const { User } = require("shared/models");
-const { Secure } = require("shared/utilities");
+const {
+  User
+} = require("shared/models");
+const {
+  Secure
+} = require("shared/utilities");
 
 // describe.only("Skip All", () => {
 //   it("should skip all tests", (done) => {
@@ -24,7 +32,7 @@ const { Secure } = require("shared/utilities");
 // });
 
 describe("Basic", () => {
-  
+
   describe("Get user email", () => {
     beforeEach(reset);
     it("should respond with correct user email", (done) => {
@@ -59,7 +67,7 @@ describe("Basic", () => {
         });
     });
   });
-  
+
   describe("Get IP", () => {
     it("should get an IP", (done) => {
       chai.request(server)
@@ -71,7 +79,7 @@ describe("Basic", () => {
         });
     });
   });
-  
+
   describe("Get IP with Trust Proxy Header", () => {
     it("should get the passed in IP", (done) => {
       chai.request(server)
