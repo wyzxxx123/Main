@@ -23,6 +23,9 @@ const {
 const {
   Email
 } = require("shared/utilities");
+const {
+  NEW_USER_EMAIL
+} = require("../constants.js");
 
 const TWENTY_DAYS = 20 * 86400000;
 const NEW_CARD_TOKEN = "tok_amex";
@@ -892,7 +895,10 @@ describe("Subscription Controller", () => {
           const spyEmailSendCancelSubscription = sinon.spy(Email, 'sendCancelSubscription');
           Client.signupConfirmSignin()
             .then(response => {
-              return addActiveIosSubscription();
+              return User.getWithEmail(NEW_USER_EMAIL);
+            })
+            .then(response => {
+              return addActiveIosSubscription(response.id);
             })
             .then(response => {
               return makeStripeSource(NEW_CARD_TOKEN);

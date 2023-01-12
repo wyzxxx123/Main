@@ -185,8 +185,9 @@ module.exports = {
       });
   },
   
-  addActiveIosSubscription: () => {
+  addActiveIosSubscription: (userId) => {
     var addTestSubscription = fs.readFileSync(path.join(__dirname, "test-files", "add-active-ios-subscription.sql"), "utf-8");
+    addTestSubscription = addTestSubscription.replace("REPLACE_USER_ID", userId)
     return Database.query(addTestSubscription)
       .then( result => {
         if (result.rowCount !== 1) {

@@ -14,7 +14,7 @@ INSERT INTO "public"."subscriptions"(
   "updated"
 )
 VALUES
-('cca595c86645a762672b1df9b52fda58',
+('REPLACE_USER_ID',
   '1000000386259702',
   'ios',
   'all-monthly',

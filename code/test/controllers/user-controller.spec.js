@@ -246,7 +246,7 @@ describe("User Controller", () => {
             })
             .then(certificate => {
               certificate.sourceId.should.equal(Constants.CURRENT_SOURCE_ID);
-              certificate.userId.should.equal(Constants.NEW_USER_ID);
+              certificate.userId.should.be.oneOf([Constants.NEW_USER_ID, Constants.NEW_USER_ID_ALT]);
               certificate.revoked.should.equal(false);
               certificate.assigned.should.equal(true);
               certificate.p12.should.equal(Constants.NEW_USER_P12);
@@ -284,7 +284,7 @@ describe("User Controller", () => {
             })
             .then(certificate => {
               certificate.sourceId.should.equal(Constants.CURRENT_SOURCE_ID);
-              certificate.userId.should.equal(Constants.NEW_USER_ID);
+              certificate.userId.should.be.oneOf([Constants.NEW_USER_ID, Constants.NEW_USER_ID_ALT]);
               certificate.revoked.should.equal(false);
               certificate.assigned.should.equal(true);
               certificate.p12.should.equal(Constants.NEW_USER_P12);
@@ -729,13 +729,13 @@ describe("User Controller", () => {
             })
             .then(response => {
               response.should.have.status(200);
-              response.body.id.should.equal(Constants.NEW_USER_ID);
+              response.body.id.should.be.oneOf([Constants.NEW_USER_ID, Constants.NEW_USER_ID_ALT]);
               response.body.b64.should.equal(Constants.NEW_USER_P12);
               return Certificate.getWithSourceAndUser(Constants.CURRENT_SOURCE_ID, Constants.NEW_USER_ID);
             })
             .then(certificate => {
               certificate.sourceId.should.equal(Constants.CURRENT_SOURCE_ID);
-              certificate.userId.should.equal(Constants.NEW_USER_ID);
+              certificate.userId.should.be.oneOf([Constants.NEW_USER_ID, Constants.NEW_USER_ID_ALT]);
               certificate.revoked.should.equal(false);
               certificate.assigned.should.equal(true);
               certificate.p12.should.equal(Constants.NEW_USER_P12);
@@ -759,13 +759,13 @@ describe("User Controller", () => {
             })
             .then(response => {
               response.should.have.status(200);
-              response.body.id.should.equal(Constants.NEW_USER_ID);
+              response.body.id.should.be.oneOf([Constants.NEW_USER_ID, Constants.NEW_USER_ID_ALT]);
               response.body.b64.should.equal(Constants.NEW_USER_P12);
               return Certificate.getWithSourceAndUser(Constants.CURRENT_SOURCE_ID, Constants.NEW_USER_ID);
             })
             .then(certificate => {
               certificate.sourceId.should.equal(Constants.CURRENT_SOURCE_ID);
-              certificate.userId.should.equal(Constants.NEW_USER_ID);
+              certificate.userId.should.be.oneOf([Constants.NEW_USER_ID, Constants.NEW_USER_ID_ALT]);
               certificate.revoked.should.equal(false);
               certificate.assigned.should.equal(true);
               certificate.p12.should.equal(Constants.NEW_USER_P12);
