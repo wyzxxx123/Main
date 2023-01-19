@@ -33,7 +33,7 @@ const {
 
 describe("Basic", () => {
 
-  describe.only("Get user email", () => {
+  describe("Get user email", () => {
     beforeEach(reset);
     it("should respond with correct user email", (done) => {
       User.getWithEmail(Constants.EXISTING_USER_EMAIL)
