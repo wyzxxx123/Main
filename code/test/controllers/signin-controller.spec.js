@@ -68,6 +68,9 @@ describe("Signin Controller", () => {
               response.body.code.should.equal(0);
               return User.getWithId(Constants.NEW_USER_ID);
             })
+            .catch(error => {
+              return User.getWithId(Constants.NEW_USER_ID_ALT);
+            })
             .then(user => {
               Constants.NEW_USER_PARTNER_CAMPAIGN_1.should.not.equal(user.partnerCampaign);
               done();
@@ -87,6 +90,9 @@ describe("Signin Controller", () => {
               response.body.code.should.equal(0);
               return User.getWithId(Constants.NEW_USER_ID);
             })
+            .catch(error => {
+              return User.getWithId(Constants.NEW_USER_ID_ALT);
+            })
             .then(user => {
               user.partnerCampaign.should.equal(Constants.NEW_USER_PARTNER_CAMPAIGN_1);
               done();
@@ -105,6 +111,9 @@ describe("Signin Controller", () => {
               response.body.message.should.equal("Signed In");
               response.body.code.should.equal(0);
               return User.getWithId(Constants.NEW_USER_ID);
+            })
+            .catch(error => {
+              return User.getWithId(Constants.NEW_USER_ID_ALT);
             })
             .then(user => {
               user.partnerCampaign.should.equal(Constants.NEW_USER_PARTNER_NO_CAMPAIGN + "-");

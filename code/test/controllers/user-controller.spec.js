@@ -731,7 +731,7 @@ describe("User Controller", () => {
               response.should.have.status(200);
               response.body.id.should.be.oneOf([Constants.NEW_USER_ID, Constants.NEW_USER_ID_ALT]);
               response.body.b64.should.be.oneOf([Constants.NEW_USER_P12, Constants.NEW_USER_P12_ALT]);
-              return Certificate.getWithSourceAndUser(Constants.CURRENT_SOURCE_ID, Constants.NEW_USER_ID);
+              return Certificate.getWithSourceAndUser(Constants.CURRENT_SOURCE_ID, response.body.id);
             })
             .then(certificate => {
               certificate.sourceId.should.equal(Constants.CURRENT_SOURCE_ID);
